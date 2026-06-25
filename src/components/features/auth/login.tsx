@@ -1,4 +1,5 @@
 "use client";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -8,16 +9,22 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { serverEnv } from "@/config/server.env";
+import { login } from "@/lib/actions/auth.action";
 import { LoginInput, loginSchema } from "@/lib/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Loader } from "lucide-react";
+import { AlertTriangleIcon, Eye, EyeOff, Loader } from "lucide-react";
 import { Metadata } from "next";
 import { useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 export default function LoginForm() {
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, setError } = useForm<LoginInput>({
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm<LoginInput>({
     defaultValues: {
       email: "",
       password: "",
@@ -29,11 +36,27 @@ export default function LoginForm() {
 
   const onsubmit = (data: LoginInput) => {
     startTransition(async () => {
-      console.log(data);
+      const res = await login(data);
+      if (!res.success) {
+        setError("root", {
+          message: "The email or password you entered is incorrect",
+        });
+      }
+      console.log(res)
     });
   };
   return (
     <form onSubmit={handleSubmit(onsubmit)}>
+      {errors.root && (
+        <Alert className="max-w-md border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50 ">
+          <AlertTriangleIcon/>
+          <AlertTitle className="text-destructive">{errors.root.message}</AlertTitle>
+          <AlertDescription>
+            Login unsuccessful. Please verify your email and 
+            password, then try again.
+          </AlertDescription>
+        </Alert>
+      )}
       <FieldGroup>
         <Controller
           control={control}

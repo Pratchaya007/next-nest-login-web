@@ -1,7 +1,12 @@
+import Header from "@/components/layout/header";
+
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>
+  return <div className="min-h-screen">
+  <Header/>
+  {children}
+  </div>;
 }

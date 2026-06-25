@@ -9,7 +9,7 @@ export const registerSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 
 export const loginSchema = z.object({
-  email: z.string().min(1, "กรุณากรอกอีเมลของท่าน"),
+  email: z.email().min(1, "กรุณากรอกอีเมลของท่าน"),
   password: z.string().min(6, "กรุณากรอกรหัสผ่านมากกว่า 6 ตัวอักษร"),
 });
 
