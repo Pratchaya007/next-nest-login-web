@@ -1,5 +1,6 @@
 import { serverEnv } from "@/config/server.env";
 import { ApiError } from "./api.error";
+import { auth } from "../auth/auth";
 
 // 1. Costom Method
 type RequestOptions = {
@@ -17,12 +18,16 @@ const apiFetch = async <T>(
 ): Promise<T> => {
   // 3.1 ดึงข้อมูลมาใช้งานแบบ de
   const { method = "GET", body } = options;
+  const session = await auth()
 
   // 3.2 ถ้ามี body and body not formdata ให้ใส่ ['Content-type'] = 'application/json'
   const headers: Record<string, string> = {};
   if (body && !(body instanceof FormData))
     //ถ้าใน body in data? and not FormData ใฟ้ใส่ ['Content-type'] = 'application/json'
     headers["Content-type"] = "application/json";
+    
+  // การแทบ Token ในเวลา Fetch
+  if (session?.user?.accessToken) headers['Authorization'] = `Bearer ${session.user.accessToken}`
 
   // 3.3 ถ้าbody เป็น instanceof formaData return body not FormaData Change JSON.stringify
   const config: RequestInit = {

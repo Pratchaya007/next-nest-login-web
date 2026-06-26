@@ -11,7 +11,7 @@ const NAVIGATION_ITEMS = [
 
 export default function MainNavigation() {
   const pathname = usePathname();
-  console.log("ddddddd", pathname);
+  // console.log("ddddddd", pathname);
 
   return (
     <div className="flex items-center justify-center">
