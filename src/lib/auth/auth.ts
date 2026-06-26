@@ -21,9 +21,11 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
         token.role = user.role;
         token.accessToken = user.accessToken;
       }
-      if (trigger === 'update' && this.session) {
-        token.avatarUrl = session.user.avatarUrl
+      if (trigger === 'update' && session?.user) {
+        token.avatarUrl = session.user.avatarUrl ?? token.avatarUrl;
+        token.name = session.user.name ?? token.name;
       }
+      console.log({ trigger, session })
 
       return token;
     },

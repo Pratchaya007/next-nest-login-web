@@ -14,3 +14,10 @@ export const loginSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
+
+
+export const updataSchema  = z.object({
+  name: z.string().min(1, {message: 'กรุณากรอกชื่อใหม่เพื่ออัพเดท'})
+})
+
+export type UpdataUser = z.infer<typeof updataSchema>
