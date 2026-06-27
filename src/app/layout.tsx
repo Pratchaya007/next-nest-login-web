@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { notoSans } from "@/style/font";
 import { Metadata } from "next";
 import { ThemeProvider } from "@/components/darkmode/theme-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster richColors position='top-center'/>
         </ThemeProvider>
       </body>
     </html>
