@@ -21,6 +21,7 @@ export default function LoginPage() {
         {/* Form Login */}
         <LoginForm/>
 
+        
         {/* Create new account */}
         <div className="mt-6">
           <Button className="w-full rounded-full border-primary text-primary hover:text-primary" variant={'outline'}>

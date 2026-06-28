@@ -29,6 +29,10 @@ export const login = async (input: LoginInput): Promise<ActionResult> => {
   redirect("/");
 };
 
+export async function googleLogin() {
+  await signIn("google");
+}
+
 export const forgot = async (input: ForgotPassword): Promise<ActionResult> => {
   try {
     await authService.forgotPassword(input);
@@ -38,7 +42,10 @@ export const forgot = async (input: ForgotPassword): Promise<ActionResult> => {
   }
 };
 
-export const reset = async (token:string , password:string): Promise<ActionResult> => {
+export const reset = async (
+  token: string,
+  password: string,
+): Promise<ActionResult> => {
   try {
     await authService.resetPassword(token, password);
     return { success: true };

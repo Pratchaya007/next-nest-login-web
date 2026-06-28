@@ -1,5 +1,5 @@
 import { LogOut, Settings, User } from "lucide-react";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +24,9 @@ export default async function UserDropdown() {
             alt="user"
             src={session?.user?.avatarUrl ?? "/profile_icon.png"}
           />
+          <AvatarFallback>
+            {session?.user?.name?.charAt(0).toLocaleUpperCase() ?? "U"}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
